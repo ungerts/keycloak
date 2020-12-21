@@ -247,16 +247,16 @@ public class DefaultThemeManager implements ThemeManager {
                     messages.putAll(getMessages(baseBundlename, parent));
                 }
 
-                for (ThemeResourceProvider t : themeResourceProviders ){
-                    messages.putAll(t.getMessages(baseBundlename, locale));
-                }
-
                 ListIterator<Theme> itr = themes.listIterator(themes.size());
                 while (itr.hasPrevious()) {
                     Properties m = itr.previous().getMessages(baseBundlename, locale);
                     if (m != null) {
                         messages.putAll(m);
                     }
+                }
+
+                for (ThemeResourceProvider t : themeResourceProviders ){
+                    messages.putAll(t.getMessages(baseBundlename, locale));
                 }
                 
                 this.messages.putIfAbsent(baseBundlename, new ConcurrentHashMap<Locale, Properties>());
